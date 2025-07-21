@@ -9,8 +9,10 @@ import locale
 try:
     locale.setlocale(locale.LC_TIME, 'de_DE.UTF-8')
 except:
-    locale.setlocale(locale.LC_TIME, 'deu')
-
+    llocale.Error:
+    # Fallback, falls das Locale auf dem Server nicht verfügbar ist
+    pass
+    
 # 🚚 Ordnerpfade
 ordner_cc = r"P:\bellissa\Lagerleitung\KPI\Durchlaufzeiten\2025\C&C\TEST"
 ordner_gaz = r"P:\bellissa\Lagerleitung\KPI\Durchlaufzeiten\2025\GAZ\TEST"
@@ -23,8 +25,9 @@ def lade_und_analysiere_daten(pfad):
     for datei in dateien:
         try:
             datum = datetime.strptime(f"{datei[:5]}.2025", "%d.%m.%Y")
-        except:
-            continue
+          locale.Error:
+    # Fallback, falls das Locale auf dem Server nicht verfügbar ist
+    pass
 
         df = pd.read_csv(os.path.join(pfad, datei), sep=";", encoding="utf-8")
         if "Durchlaufzeit" not in df.columns:
