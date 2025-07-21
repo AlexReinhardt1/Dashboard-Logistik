@@ -8,8 +8,7 @@ import locale
 # Sprache für Monatsnamen auf Deutsch
 try:
     locale.setlocale(locale.LC_TIME, 'de_DE.UTF-8')
-except:
-    llocale.Error:
+except locale.Error:
     # Fallback, falls das Locale auf dem Server nicht verfügbar ist
     pass
     
