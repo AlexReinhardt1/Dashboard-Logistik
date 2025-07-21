@@ -3,15 +3,14 @@ import pandas as pd
 import numpy as np
 import os
 from datetime import datetime
-import locale
 
-# Sprache für Monatsnamen auf Deutsch
-try:
-    locale.setlocale(locale.LC_TIME, 'de_DE.UTF-8')
-except locale.Error:
-    # Fallback, falls das Locale auf dem Server nicht verfügbar ist
-    pass
-    
+# Manuelle Zuordnung der Monatsnamen auf Deutsch
+deutsche_monate = {
+    1: "Januar", 2: "Februar", 3: "März", 4: "April",
+    5: "Mai", 6: "Juni", 7: "Juli", 8: "August",
+    9: "September", 10: "Oktober", 11: "November", 12: "Dezember"
+}
+
 # 🚚 Ordnerpfade
 ordner_cc = r"P:\bellissa\Lagerleitung\KPI\Durchlaufzeiten\2025\C&C\TEST"
 ordner_gaz = r"P:\bellissa\Lagerleitung\KPI\Durchlaufzeiten\2025\GAZ\TEST"
@@ -24,9 +23,8 @@ def lade_und_analysiere_daten(pfad):
     for datei in dateien:
         try:
             datum = datetime.strptime(f"{datei[:5]}.2025", "%d.%m.%Y")
-          locale.Error:
-    # Fallback, falls das Locale auf dem Server nicht verfügbar ist
-    pass
+        except:
+            continue
 
         df = pd.read_csv(os.path.join(pfad, datei), sep=";", encoding="utf-8")
         if "Durchlaufzeit" not in df.columns:
@@ -49,7 +47,7 @@ def lade_und_analysiere_daten(pfad):
             "Aufträge <24h": unter_24,
             "Lieferquote <24h (%)": quote,
             "Ø Tages-Durchlaufzeit (h)": avg,
-            "Monat": datum.strftime("%B"),
+            "Monat": deutsche_monate[datum.month],
             "Jahr": datum.year,
             "Monat_Num": datum.month
         })
